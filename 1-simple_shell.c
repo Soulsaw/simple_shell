@@ -1,4 +1,12 @@
 #include "main.h"
+#include <stdlib.h>
+#include <signal.h>
+void kill_process(pid_t pid)
+{
+	kill(pid, SIGTERM);
+	sleep(1);
+	kill(-pid, SIGKILL);
+}
 /**
  * main - The entry point of program
  *
