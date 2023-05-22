@@ -22,7 +22,7 @@ int main(void)
 		myPid = fork();
 		if (myPid == 0)
 		{
-			printf("#cisfun$ ");
+			printf(":) ");
 			if (getline(&cmd, &len, stdin) == -1)
 			{
 				perror(__FILE__);
