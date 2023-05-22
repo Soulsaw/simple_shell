@@ -1,12 +1,7 @@
 #include "main.h"
 #include <stdlib.h>
 #include <signal.h>
-void kill_process(pid_t pid)
-{
-	kill(pid, SIGTERM);
-	sleep(1);
-	kill(-pid, SIGKILL);
-}
+#include <string.h>
 /**
  * main - The entry point of program
  *
@@ -16,10 +11,10 @@ void kill_process(pid_t pid)
  */
 int main(void)
 {
-	char *argv[] = {NULL, NULL};
-	char *cmd = NULL;
+	char *argv[] = {NULL, NULL, NULL, NULL};
+	char *cmd = NULL, *str1, *token;
 	size_t len;
-	int i = 0, cpt = 0, status;
+	int i = 0, cpt = 0, status, j;
 	pid_t myPid;
 
 	while (1)
@@ -27,7 +22,7 @@ int main(void)
 		myPid = fork();
 		if (myPid == 0)
 		{
-			printf("#cisfun$ ");
+			printf(":) ");
 			if (getline(&cmd, &len, stdin) == -1)
 			{
 				perror(__FILE__);
@@ -38,7 +33,14 @@ int main(void)
 				i++;
 			}
 			cmd[cpt - 1] = '\0';
-			argv[0] = cmd;
+			for (j = 0, str1 = cmd; ; j++, str1 = NULL)
+			{
+				token = strtok(str1, " ");
+				if (token == NULL)
+					break;
+				argv[j] = token;
+			}
+			argv[3] = NULL;
 			if (execve(argv[0], argv, NULL) == -1)
 			{
 				perror(__FILE__);
