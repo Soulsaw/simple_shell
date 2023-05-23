@@ -1,0 +1,62 @@
+#include "main.h"
+/**
+ * env_cmd - This function return 0 if the command is env and -1 else
+ * @cmd: The command we want to test
+ * Return: 0 or -1
+ */
+int env_cmd(char *cmd)
+{
+	int i, b = 0;
+	char argv[] = "env";
+
+	i = 0;
+	while (cmd[i] != '\0')
+	{
+		if (cmd[i] != argv[i])
+			b = -1;
+		i++;
+	}
+	return (b);
+}
+/**
+ * exit_cmd - This function return 0 if exit command is put and 1 else
+ * @cmd: The command we want to check
+ * Return: 0 or 1
+ */
+int exit_cmd(char *cmd)
+{
+	int i, b = 0;
+	char argv[] = "exit";
+
+	i = 0;
+	while (cmd[i] != '\0')
+	{
+		if (cmd[i] != argv[i])
+			b = 1;
+		i++;
+	}
+	return (b);
+}
+/**
+ * execute_process - This function execute a command
+ * @pid: This is the pointer to the pid
+ * @argv: Is the aeguments
+ */
+void execute_process(pid_t *pid, char *argv[])
+{
+	int status;
+
+	*pid = fork();
+	if (*pid == 0)
+	{
+		if (execve(argv[0], argv, NULL) == -1)
+		{
+			perror(__FILE__);
+			exit(1);
+		}
+	}
+	else
+	{
+		waitpid(*pid, &status, 0);
+	}
+}
