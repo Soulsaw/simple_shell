@@ -1,39 +1,13 @@
 #include "main.h"
-#include <stdlib.h>
-/**
- * execute_process - This function execute a command
- * @pid: This is the pointer to the pid
- * @argv: Is the aeguments
- */
-void execute_process(pid_t *pid, char *argv[])
-{
-	int status;
-	*pid = fork();
-	if (*pid == 0)
-	{
-		if (execve(argv[0], argv, NULL) == -1)
-		{
-			perror(__FILE__);
-			exit(1);
-		}
-	}
-	else
-	{
-		waitpid(*pid, &status, 0);
-	}
-}
 /**
  * main - The entry point of program
- *
  * Return: Always 0.
- *
- *
  */
 int main(void)
 {
-	char *cmd = NULL;
-	size_t len;
-	int i = 0, cpt = 0;
+	char *cmd = NULL;/** The variable stock the command line */
+	size_t len, cpt;/** cpt can permit to change the last char to '\0'*/
+	int i;
 	pid_t myPid;
 
 	while (1)
@@ -43,6 +17,8 @@ int main(void)
 		{
 			break;
 		}
+		cpt = 0;
+		i = 0;
 		while (cmd[i] != '\0')
 		{
 			cpt++;
@@ -52,7 +28,6 @@ int main(void)
 		char *argv[] = { cmd, NULL};
 
 		execute_process(&myPid, argv);
-		free(argv[1]);
 	}
 	free(cmd);
 	return (0);
