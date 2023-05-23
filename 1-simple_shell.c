@@ -1,11 +1,26 @@
 #include "main.h"
 #include <stdlib.h>
-#include <signal.h>
-void kill_process(pid_t pid)
+/**
+ * execute_process - This function execute a command
+ * @pid: This is the pointer to the pid
+ * @argv: Is the aeguments
+ */
+void execute_process(pid_t *pid, char *argv[])
 {
-	kill(pid, SIGTERM);
-	sleep(1);
-	kill(-pid, SIGKILL);
+	int status;
+	*pid = fork();
+	if (*pid == 0)
+	{
+		if (execve(argv[0], argv, NULL) == -1)
+		{
+			perror(__FILE__);
+			exit(1);
+		}
+	}
+	else
+	{
+		waitpid(*pid, &status, 0);
+	}
 }
 /**
  * main - The entry point of program
@@ -16,40 +31,29 @@ void kill_process(pid_t pid)
  */
 int main(void)
 {
-	char *argv[] = {NULL, NULL};
 	char *cmd = NULL;
 	size_t len;
-	int i = 0, cpt = 0, status;
+	int i = 0, cpt = 0;
 	pid_t myPid;
 
 	while (1)
 	{
-		myPid = fork();
-		if (myPid == 0)
+		printf("#cisfun$ ");
+		if (getline(&cmd, &len, stdin) == -1)
 		{
-			printf("#cisfun$ ");
-			if (getline(&cmd, &len, stdin) == -1)
-			{
-				perror(__FILE__);
-			}
-			while (cmd[i] != '\0')
-			{
-				cpt++;
-				i++;
-			}
-			cmd[cpt - 1] = '\0';
-			argv[0] = cmd;
-			if (execve(argv[0], argv, NULL) == -1)
-			{
-				perror(__FILE__);
-			}
+			break;
 		}
-		else
+		while (cmd[i] != '\0')
 		{
-			wait(&status); /** The parent process wait
-					* then childreen process terminate
-					*/
+			cpt++;
+			i++;
 		}
+		cmd[cpt - 1] = '\0';
+		char *argv[] = { cmd, NULL};
+
+		execute_process(&myPid, argv);
+		free(argv[1]);
 	}
+	free(cmd);
 	return (0);
 }
