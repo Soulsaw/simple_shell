@@ -1,12 +1,12 @@
 #include "main.h"
 /**
  * main - The entry point of program
- *
+ * @ac: The size of av array
+ * @av: The arrat
+ * @env: The env the content of the env
  * Return: Always 0.
- *
- *
  */
-int main(void)
+int main(int ac, char **av, char **env)
 {
 	char *cmd = NULL, *str1, *token;
 	size_t len;
@@ -28,6 +28,8 @@ int main(void)
 		cmd[cpt - 1] = '\0';
 		if (exit_cmd(cmd) == 0)
 			break;
+		if (env_cmd(cmd) == 0)
+			_env(env);
 		char *argv[] = {NULL, NULL, NULL, NULL};
 
 		for (i = 0, str1 = cmd; ; i++, str1 = NULL)

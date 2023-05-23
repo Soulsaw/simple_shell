@@ -60,3 +60,18 @@ void execute_process(pid_t *pid, char *argv[])
 		waitpid(*pid, &status, 0);
 	}
 }
+/**
+ * _env - This function print every env alue
+ * @env: The array content all env value
+ * Return: nothing
+ */
+void _env(char **env)
+{
+	int i = 0;
+
+	while (env[i] != NULL)
+	{
+		printf("%s\n", env[i]);
+		i++;
+	}
+}
