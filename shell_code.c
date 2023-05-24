@@ -42,7 +42,7 @@ int exit_cmd(char *cmd)
  * @pid: This is the pointer to the pid
  * @argv: Is the aeguments
  */
-void execute_process(pid_t *pid, char *argv[])
+void execute_process(pid_t *pid, char *argv[], char *name)
 {
 	int status;
 
@@ -51,7 +51,8 @@ void execute_process(pid_t *pid, char *argv[])
 	{
 		if (execve(argv[0], argv, NULL) == -1)
 		{
-			perror(__FILE__);
+			fprintf(stderr,"%s: ", name);
+			perror("");
 			exit(1);
 		}
 	}

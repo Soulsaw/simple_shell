@@ -48,7 +48,6 @@ int main(int ac, char **av, char **env)
 	int i;
 	pid_t myPid;
 
-	av[ac] = NULL;
 	while (1)
 	{
 		printf("#cisfun$ ");
@@ -69,14 +68,14 @@ int main(int ac, char **av, char **env)
 		}
 		if (argv[2] == NULL)
 		{
-			execute_process(&myPid, argv);
+			execute_process(&myPid, argv, av[ac - 1]);
 		}
 		else
 		{
 			argv[3] = NULL;
 			if (access(argv[0], X_OK) == -1)
 				continue;
-			execute_process(&myPid, argv);
+			execute_process(&myPid, argv, av[ac - 1]);
 		}
 	}
 	return (0);
