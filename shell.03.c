@@ -19,6 +19,21 @@ char *command(char *cmd)
 	return (cmd);
 }
 /**
+ * init_argv - Initialize the argv in NULL
+ * @arg: The array of string
+ * Return: nothing
+ */
+void init_argv(char **arg)
+{
+	int i = 0;
+
+	while (i < 4)
+	{
+		arg[i] = NULL;
+		i++;
+	}
+}
+/**
  * main - The entry point of program
  * @ac: The size of av array
  * @av: The arrat
@@ -27,11 +42,13 @@ char *command(char *cmd)
  */
 int main(int ac, char **av, char **env)
 {
+	char *argv[] = {NULL, NULL, NULL, NULL};
 	char *cmd = NULL, *str1, *token;
 	size_t len;
 	int i;
 	pid_t myPid;
 
+	av[ac] = NULL;
 	while (1)
 	{
 		printf(":) ");
@@ -42,8 +59,7 @@ int main(int ac, char **av, char **env)
 			break;
 		if (env_cmd(cmd) == 0)
 			_env(env);
-		char *argv[] = {NULL, NULL, NULL, NULL};
-
+		init_argv(argv);
 		for (i = 0, str1 = cmd; ; i++, str1 = NULL)
 		{
 			token = strtok(str1, " ");
