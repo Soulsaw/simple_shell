@@ -51,7 +51,7 @@ int main(int ac, char **av, char **env)
 	av[ac] = NULL;
 	while (1)
 	{
-		printf(":) ");
+		printf("#cisfun$ ");
 		if (getline(&cmd, &len, stdin) == -1)
 			break;
 		cmd = command(cmd);
