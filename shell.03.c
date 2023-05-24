@@ -1,14 +1,13 @@
 #include "main.h"
 /**
- * main - The entry point of program
- * @ac: The size of av array
- * @av: The arrat
- * @env: The env the content of the env
- * Return: Always 0.
+ * command - This function return the command
+ * @cmd: The command whith \n
+ * Return: The command
  */
 char *command(char *cmd)
 {
 	int i, cpt;
+
 	i = 0;
 	cpt = 0;
 	while (cmd[i] != '\0')
@@ -19,6 +18,13 @@ char *command(char *cmd)
 	cmd[cpt - 1] = '\0';
 	return (cmd);
 }
+/**
+ * main - The entry point of program
+ * @ac: The size of av array
+ * @av: The arrat
+ * @env: The env the content of the env
+ * Return: Always 0.
+ */
 int main(int ac, char **av, char **env)
 {
 	char *cmd = NULL, *str1, *token;
@@ -53,7 +59,7 @@ int main(int ac, char **av, char **env)
 		{
 			argv[3] = NULL;
 			if (access(argv[0], X_OK) == -1)
-				continue;	
+				continue;
 			execute_process(&myPid, argv);
 		}
 	}
