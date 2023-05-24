@@ -9,4 +9,5 @@
 int exit_cmd(char *cmd);
 void execute_process(pid_t *pid, char *argv[]);
 int env_cmd(char *cmd);
+void _env(char **env);
 #endif /* MAIN_H */
