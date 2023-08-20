@@ -51,7 +51,7 @@ void execute(char *name, char **env)
 
 	while (1)
 	{
-		printstr("#cisfun$ ");
+		printstr("");
 		status = executecommand(name, env);
 		if (status == -1)
 			break;
